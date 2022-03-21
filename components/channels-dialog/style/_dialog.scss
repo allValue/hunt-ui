@@ -1,0 +1,176 @@
+@use "../../style/index" as mixins;
+$prefix: "hunt-channels-dialog";
+
+.#{$prefix} {
+  &-wrapper,
+  &-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &-mask {
+    will-change: opacity;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    outline: none;
+    z-index: var(--z-index-dialog);
+  }
+  &-inner {
+    display: flex;
+    flex-direction: column;
+    margin: 36px auto;
+    padding: 32px 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow-elevation-4);
+  }
+  &-header {
+    flex: none;
+    position: relative;
+    margin: 0 32px;
+    min-height: 24px;
+    background-color: #fff;
+  }
+  &-headerContent {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.495);
+  }
+  &-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  &-body {
+    flex: 1;
+    padding: 32px;
+    @include mixins.overlay();
+  }
+  &-footer {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 32px;
+    height: 32px;
+    background-color: #fff;
+
+    button {
+      min-width: 100px;
+
+      &:not(:last-of-type) {
+        &:not(:only-child) {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+  &-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+  &-intentWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: -32px;
+  }
+  &-intentWrapper_center {
+    align-items: center;
+  }
+  &-intentIcon {
+    flex: none;
+    margin-right: 16px;
+  }
+  &-success {
+    .#{$prefix}-intentIcon {
+      fill: var(--ht-green);
+    }
+  }
+  &-info {
+    .#{$prefix}-intentIcon {
+      fill: var(--ht-blue);
+    }
+  }
+  &-warning {
+    .#{$prefix}-intentIcon {
+      fill: var(--ht-orange);
+    }
+  }
+  &-danger {
+    .#{$prefix}-intentIcon {
+      fill: var(--ht-red);
+    }
+  }
+  &-intentTitle {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  &-intentText {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  &-appear {
+    opacity: 0;
+    transform: scale(0.9) translate3d(0, 10px, 0);
+  }
+
+  &-appear,
+  &-enter {
+    opacity: 0;
+    transform: scale(0.9) translate3d(0, 10px, 0);
+  }
+
+  &-appear.#{$prefix}-appear-active,
+  &-enter.#{$prefix}-enter-active {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+    transition: 0s var(--ease-out) all;
+  }
+
+  &-leave {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+  &-leave.#{$prefix}-leave-active {
+    opacity: 0;
+    transform: scale(0.8) translate3d(0, 50px, 0);
+    transition: all 0s var(--ease-in);
+  }
+
+  &-mask-appear,
+  &-mask-enter {
+    opacity: 0;
+  }
+
+  &-mask-appear.#{$prefix}-mask-appear-active,
+  &-mask-enter.#{$prefix}-mask-enter-active {
+    opacity: 1;
+    transition: all 0s var(--ease-out);
+  }
+
+  &-mask-leave {
+    opacity: 1;
+  }
+
+  &-mask-leave.#{$prefix}-mask-leave-active {
+    opacity: 0;
+    transition: all 0s var(--ease-in);
+  }
+}

@@ -1,0 +1,11 @@
+@use "sass:math";
+$prefix: "hunt-grid";
+
+.#{$prefix}-row {
+  display: flex;
+}
+@for $i from 1 through 12 {
+  .#{$prefix}-col_#{$i} {
+    width: calc(math.div($i, 12) * 100%);
+  }
+}

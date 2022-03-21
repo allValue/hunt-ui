@@ -1,0 +1,95 @@
+.hunt-slider-wrapper {
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+.hunt-slider {
+  flex: 1;
+  list-style: none;
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 4px 0;
+  height: 12px;
+  cursor: pointer;
+}
+.hunt-slider-active {
+  .hunt-slider-rail {
+    background-color: var(--gray-500);
+  }
+  .hunt-slider-handle {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.1),
+      0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  }
+}
+.hunt-slider-hasMarks {
+  padding-bottom: 12px;
+}
+.hunt-slider-rail {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: var(--gray-300);
+  border-radius: 2px;
+  transition: background-color var(--motion-duration-slow);
+}
+.hunt-slider-track {
+  position: absolute;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  transition: background-color var(--motion-duration-slow) var(--ease-in-out);
+}
+.hunt-slider-handle {
+  position: absolute;
+  margin-top: -4px;
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  transition: border-color var(--motion-duration-slow),
+    transform var(--motion-duration-slow) cubic-bezier(0.18, 0.89, 0.32, 1.28),
+    box-shadow var(--motion-duration-fast) ease;
+}
+.hunt-slider-handle:hover {
+  transform: scale(1.2);
+}
+.hunt-slider-handle:focus {
+  outline: none;
+}
+.hunt-slider-handle.ant-tooltip-open {
+  border-color: #1890ff;
+}
+.hunt-slider:hover .hunt-slider-rail {
+  background-color: var(--gray-500);
+}
+.hunt-slider:hover .hunt-slider-handle:not(.ant-tooltip-open) {
+  border-color: #69c0ff;
+}
+.hunt-slider-step {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+}
+.hunt-slider-mark-text {
+  position: absolute;
+  top: 14px;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: #1f1f1f;
+  word-break: keep-all;
+  cursor: pointer;
+}
+.hunt-slider-disabled {
+  cursor: not-allowed;
+
+  .hunt-slider-mark-text,
+  .hunt-slider-handle {
+    cursor: not-allowed;
+  }
+}

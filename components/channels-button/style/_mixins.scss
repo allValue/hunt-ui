@@ -1,0 +1,145 @@
+/*  
+  @variable: $colors - 按钮类型（type) 相关的颜色集合管理
+  
+  说明：
+  更理想的书写方式是变量嵌套，如 美元符#{美元符type}_900，但 sass 语法不支持。
+
+  另一个方法是通过 sass function 条件判断，如
+  // @if $type == "primary" {
+  //    @return var(--channels);
+  // }
+  // @else {
+  //     ...
+  // }
+  感觉稍复杂。
+
+  综上：每个 type 的颜色在此变量中集合管理。
+*/
+
+@use "sass:map";
+
+$prefix: "hunt-channels-button";
+
+$colors: (
+  normal-text: var(--gray-900),
+  normal-bg: #fff,
+  normal-bg-hover: var(--gray-100),
+  normal-bg-active: var(--gray-200),
+  normal-border: (
+    0 3px 3px 0 rgba(0, 0, 0, 0.03),
+    0 0 0 1px var(--gray-400),
+  ),
+  normal-border-hover: (
+    0 3px 3px 0 rgba(0, 0, 0, 0.03),
+    0 0 0 1px var(--gray-500),
+  ),
+  normal-border-active: (
+    inset 0 1px 2px 0 rgba(0, 0, 0, 0.04),
+    0 0 0 1px var(--gray-500),
+  ),
+  primary-text: #fff,
+  primary-bg: var(--channels),
+  primary-bg-gradient-hover: linear-gradient(-180deg, #faa64e, #faa64e),
+  primary-bg-gradient-active: linear-gradient(-180deg, #e18d35, #e18d35),
+  success-text: #fff,
+  success-bg: var(--ht-green),
+  success-bg-gradient-hover:
+    linear-gradient(-180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%),
+  success-bg-gradient-active:
+    linear-gradient(-180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%),
+  warning-text: #fff,
+  warning-bg: var(--ht-orange),
+  warning-bg-gradient-hover:
+    linear-gradient(-180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%),
+  warning-bg-gradient-active:
+    linear-gradient(-180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%),
+  danger-text: #fff,
+  danger-bg: var(--ht-red),
+  danger-bg-gradient-hover:
+    linear-gradient(-180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%),
+  danger-bg-gradient-active:
+    linear-gradient(-180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%),
+  normal-light-text: var(--gray-800),
+  normal-light-text-hover: var(--gray-900),
+  normal-light-text-active: var(--gray-900),
+  normal-light-color: var(--gray-800),
+  primary-light-color: var(--channels),
+  success-light-color: var(--ht-green),
+  warning-light-color: var(--ht-orange),
+  danger-light-color: var(--ht-red),
+);
+
+/*  
+  根据按钮类型（type）生成颜色相关的样式
+  @param $type - 按钮类型（type）
+*/
+@mixin base-type($type) {
+  @if $type != "normal" {
+    font-weight: 500;
+
+    .#{$prefix}-leftIcon,
+    .#{$prefix}-rightIcon {
+      fill: #fff;
+    }
+  } @else {
+    .#{$prefix}-leftIcon,
+    .#{$prefix}-rightIcon {
+      fill: var(--gray-800);
+    }
+  }
+  color: map.get($colors, #{$type}#{-text});
+  background-color: map.get($colors, #{$type}#{-bg});
+
+  &:hover {
+    background-image: map.get($colors, #{$type}#{-bg-gradient-hover});
+    background-color: map.get($colors, #{$type}#{-bg-hover});
+  }
+
+  &.#{$prefix}-active,
+  &:active {
+    background-image: map.get($colors, #{$type}#{-bg-gradient-active});
+    background-color: map.get($colors, #{$type}#{-bg-active});
+  }
+}
+
+/*  
+  根据按钮类型（type）生成颜色相关的 light 样式
+  @param $type - 按钮类型（type）
+*/
+@mixin light-type($type) {
+  font-weight: 500;
+  color: var(--channels);
+  background-color: #f5f5f5;
+
+  .#{$prefix}-leftIcon,
+  .#{$prefix}-rightIcon {
+    fill: currentColor;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &.#{$prefix}-active,
+  &:active {
+    background-color: #dcdcdc;
+  }
+}
+
+/*  
+  根据按钮类型（type）生成颜色相关的样式集合，包含了 light 和 非 light 的样式
+  @param $type - 按钮类型（type）
+*/
+@mixin generate-button-type($type) {
+  .#{$prefix}-#{$type} {
+    &:not(.#{$prefix}-disabled) {
+      &.#{$prefix}-light {
+        @include light-type($type);
+      }
+
+      &:not(.#{$prefix}-light) {
+        @include base-type($type);
+      }
+    }
+  }
+}
